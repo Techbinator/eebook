@@ -49,12 +49,12 @@ export default class AirportSearchInput extends Dropdown {
   onOptionSelected(option, index, event) {
     event.preventDefault();
     event.stopPropagation();
+    this.refs.toggle.focus();
     this.setState({
       isOpen: false,
       airportName: option.label,
       airportCode: option.value
     });
-    this.refs.toggle.focus();
     this.props.onOptionSelected(option, index);
   }
 
@@ -65,7 +65,9 @@ export default class AirportSearchInput extends Dropdown {
   }
 
   onBlur() {
-    if (this.state.airportName && !this.state.airportCode) {
+    if (!this.state.isOpen &&
+        this.state.airportName && 
+        !this.state.airportCode) {
       this.setState({ airportName:"" });
     }
   }
@@ -85,6 +87,14 @@ export default class AirportSearchInput extends Dropdown {
                 itm.value.toUpperCase()   === query ||
                 itm.label.match(contains) !== null)); 
     });
+
+    if (!airports.length) {
+      return [{
+        disabled: true,
+        label: "No matches were found",
+        value: ""
+      }];      
+    }
 
     return airports;
   }
@@ -132,10 +142,11 @@ export default class AirportSearchInput extends Dropdown {
   }
 
   render() {
-    const cls = classNames(
+    const options = this.filterOptions();
+    const cls     = classNames(
       this.props.className, 
       "form-group", "dropdown", "airport-search-input",
-      {"open": this.state.isOpen === true}
+      {"open": this.state.isOpen === true && options.length}
     );
 
     //      onFocus={this.openMenu.bind(this)}
@@ -146,7 +157,7 @@ export default class AirportSearchInput extends Dropdown {
         {this.renderToggle()}
 
         <ul className="dropdown-menu" aria-labelledby={this.id} onKeyDown={this.onKeyDown.bind(this)}>
-          {this.renderMenuItems(this.filterOptions())}
+          {this.renderMenuItems(options)}
         </ul>
       </div>
     );
