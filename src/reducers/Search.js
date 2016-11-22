@@ -1,8 +1,9 @@
-import axios from 'axios';
+import axios from 'axios'
+import config from '../json/config'
 
 const initialSearch = { 
-  origin: "",
-  destin: "",
+  originCode: "",
+  destinCode: "",
   numJourneys: 2,
   error:  false,
   routes: [] 
@@ -38,13 +39,13 @@ export default function Search(state = initialSearch, action) {
     case 'ORIGIN':
       return { 
         ...state,
-        origin: action.payload
+        originCode: action.payload
       };
 
     case 'DESTIN':
       return { 
         ...state,
-        destin: action.payload
+        destinCode: action.payload
       };
 
     case 'TOGGLE_RETURN':
@@ -60,19 +61,26 @@ export default function Search(state = initialSearch, action) {
 
 export function selectDestin(value) {
   return {
-    type: 'ORIGIN',
+    type: 'DESTIN',
     payload: value
   };
 }
 
 export function selectOrigin(value) {
   return {
-    type: 'DESTIN',
+    type: 'ORIGIN',
     payload: value
   };
 }
 
 export function retrieveRoutes() {
+  if (config.isOffline) {
+    return {
+      type: 'ROUTES_FULFILLED',
+      payload: require('../json/destinations.json')
+    }    
+  }
+
   return {
     type:    'ROUTES',
     payload: axios.get("http://vitela.2e-systems.com:9035/routes?lang=en")
