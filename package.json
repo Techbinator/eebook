@@ -1,0 +1,37 @@
+{
+  "name": "test-nwb-react",
+  "version": "1.0.0",
+  "description": "Describe test-nwb-react here",
+  "private": true,
+  "scripts": {
+    "build": "nwb build-react-app",
+    "clean": "nwb clean-app",
+    "start": "nwb serve-react-app",
+    "test": "nwb test",
+    "test:coverage": "nwb test --coverage",
+    "test:watch": "nwb test --server"
+  },
+  "dependencies": {
+    "axios": "^0.15.2",
+    "classnames": "^2.2.5",
+    "immutability-helper": "^2.0.0",
+    "lodash": "^4.17.0",
+    "react": "^15.3.2",
+    "react-addons-css-transition-group": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "react-redux": "^4.4.6",
+    "react-router": "2.6.1",
+    "react-router-redux": "4.0.5",
+    "redux": "^3.6.0",
+    "redux-promise-middleware": "^4.1.0",
+    "redux-thunk": "^2.1.0"
+  },
+  "devDependencies": {
+    "redux-logger": "^2.7.4",
+    "nwb": "0.12.x",
+    "nwb-sass": "^0.6.0"
+  },
+  "author": "",
+  "license": "MIT",
+  "repository": ""
+}

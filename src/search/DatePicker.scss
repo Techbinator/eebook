@@ -1,0 +1,47 @@
+.date-picker {
+  border:  1px solid #ccc;
+  padding: 0.5em;
+
+  .label {
+    color: #ccc;
+    font-size: 1em;
+  }
+
+  .day {
+    font-size: 4em;
+    font-weight: normal;
+    line-height: 1.0em;
+    display: inline-block;
+  }
+
+  .month-year {
+    font-size: 1.5em;
+    margin-top: 0.3em;
+    line-height: 1.0em;
+    display: inline-block;
+  }
+
+  .btn {
+    margin-top: 0.25em;
+    transition-property: opacity;
+    transition-duration: 200ms;
+    transition-timing-function: ease;
+    opacity: 0.3;
+  }
+
+  &:hover .btn {
+    margin-top: 0.25em;
+    opacity: 1.0;
+  }
+
+  &.disabled {
+    .label, .day, .month-year {
+      opacity: 0.3
+    }
+    .btn {
+      margin-top: 0.25em;
+      opacity: 0.3;
+    }
+  }
+}
+

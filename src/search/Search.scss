@@ -1,0 +1,26 @@
+
+.search {
+  .row {
+    &.compact {
+      margin: 0 -2px;
+      
+      [class^="col-"] {
+        padding: 0 2px;
+      }
+    }
+
+    &.dates,
+    &.paxes {
+      margin-bottom: 15px;
+    }
+  }
+
+	.airport-search-input .input-group-addon label {
+	  width: 50px;
+	  margin: 0px;
+	}
+
+	.actions .btn--text {
+	  margin-left: 0.5em;
+	}
+} 

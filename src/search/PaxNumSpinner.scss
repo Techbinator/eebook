@@ -1,0 +1,61 @@
+.paxnum-spinner {
+  border:  1px solid #ccc;
+  padding: 0.5em;
+  overflow: hidden;
+}
+
+.paxnum-spinner .content {
+  margin-top:      0px;
+  margin-bottom: -41px;
+}
+
+.paxnum-spinner .label {
+  color: #ccc;
+  font-size: 1em;
+  height: 40px;
+  display: inline-block;
+}
+
+.paxnum-spinner .number {
+  font-size: 4em;
+  font-weight: normal;
+  line-height: 1.0em;
+  display: inline-block;
+}
+
+.paxnum-spinner .range {
+  font-size: 1em;
+  line-height: 1em;
+  margin-top: 1.5em;
+  display: inline-block;  
+}
+
+.paxnum-spinner .btn {
+  margin-top: 0.25em;
+}
+
+.paxnum-spinner .content {
+ -webkit-transform: perspective(1px) translateZ(0);
+    -moz-transform: perspective(1px) translateZ(0);
+         transform: perspective(1px) translateZ(0);
+
+  -webkit-transition-duration: 200ms;
+     -moz-transition-duration: 200ms;
+          transition-duration: 200ms;
+  -webkit-transition-property: transform;
+     -moz-transition-property: transform;
+          transition-property: transform;
+  -webkit-transition-timing-function: ease-in-out;
+     -moz-transition-timing-function: ease-in-out;
+          transition-timing-function: ease-in-out;
+
+  transform: translateY(0px);
+}
+
+.paxnum-spinner .content:hover,
+.paxnum-spinner .content:focus,
+.paxnum-spinner .content:active {
+ -webkit-transform: translateY(-40px);
+    -moz-transform: translateY(-40px);
+         transform: translateY(-40px);
+}
