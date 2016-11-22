@@ -7,7 +7,7 @@ import AirportSearchInput   from './AirportSearchInput'
 import DatePicker           from './DatePicker'
 import PaxNumSpinner        from './PaxNumSpinner'
 
-import { map, uniqBy } from 'lodash'
+import { map, uniqBy, filter } from 'lodash'
 import { 
   retrieveRoutes, 
   selectOrigin, 
@@ -17,7 +17,7 @@ import {
 
 import Dropdown from '../common/Dropdown'
 
-var open = false;
+var isDatepickerOpen = false;
 
 class Form extends Component {
 
@@ -28,8 +28,8 @@ class Form extends Component {
   }
 
   onChangeDate() {
-    open = !open;
-    this.props.dispatch({ type: 'OPEN_SIDE_MENU', payload: open ? 'DatePicker': null });
+    isDatepickerOpen = !isDatepickerOpen;
+    this.props.dispatch({ type: 'OPEN_SIDE_MENU', payload: isDatepickerOpen ? 'DatePicker': null });
   }
 
   onOriginSelected(itm) {
@@ -45,25 +45,47 @@ class Form extends Component {
   }
 
   getOrigins() {
-    let origins = map(this.props.options, (itm) => {
+    let options = this.props.options;
+
+    if (this.props.destinCode !== "") {
+      options = filter(options, {destinationCode: this.props.destinCode});
+    }
+
+    let origins = map(options, (itm) => {
       return {
         label: itm.originName,
         value: itm.originCode        
       };
     });
+
     origins = uniqBy(origins, 'value');
     return origins;
   }
 
   getDestinations() {
-    let destins = map(this.props.options, itm => {
+    let options = this.props.options;
+    
+    if (this.props.originCode !== "") {
+      options = filter(options, {originCode: this.props.originCode});
+    }
+
+    let destins = map(options, itm => {
       return {
         label: itm.destinationName,
         value: itm.destinationCode
       }
     });
-    destins = uniqBy(destins, 'value');
+
+    destins = uniqBy(destins, 'value');    
     return destins;
+  }
+
+  clearOrigin() {
+    this.props.dispatch(selectOrigin(""));
+  }
+
+  clearDestin() {
+    this.props.dispatch(selectDestin(""));
   }
 
   render() {
@@ -87,15 +109,17 @@ class Form extends Component {
         <fieldset>
           <legend className="sr-only">Airports</legend>
           <AirportSearchInput 
-            label="From" 
+            label="From"
             error={this.props.error}
-            onOptionSelected={this.onOriginSelected.bind(this)} 
+            onInput={this.clearOrigin.bind(this)}
+            onOptionSelected={this.onOriginSelected.bind(this)}
             options={this.getOrigins()}
           />
           <AirportSearchInput 
             label="To"
-            error={this.props.error} 
-            onOptionSelected={this.onDestinSelected.bind(this)} 
+            error={this.props.error}
+            onInput={this.clearDestin.bind(this)}
+            onOptionSelected={this.onDestinSelected.bind(this)}
             options={this.getDestinations()}
           />
         </fieldset>
@@ -155,9 +179,11 @@ Form.defaultProps = {
 function getProperties(state) {
   const st = state.Search;
   return {
-    options:  st.routes,
-    error:    st.error,
-    isOneWay: st.numJourneys < 2
+    originCode: st.originCode,
+    destinCode: st.destinCode,
+    options:    st.routes,
+    error:      st.error,
+    isOneWay:   st.numJourneys < 2
   };
 }
 
