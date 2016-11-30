@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import RangeCalendar from './RangeCalendar'
+import RangeCalendar from '../pages/search/sub/RangeCalendar'
 
 
 export default class ExtraMenu extends Component {

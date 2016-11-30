@@ -1,5 +1,5 @@
 import './Layout.scss'
-import ExtraMenu from '../search/ExtraMenu'
+import ExtraMenu from '../layout/ExtraMenu'
 
 import React, { Component } from 'react'
 import { connect } from 'react-redux'

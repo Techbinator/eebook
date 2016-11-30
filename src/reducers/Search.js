@@ -72,7 +72,7 @@ export default function Search(state = initialSearch, action) {
       };
 
     case 'RESET_SEARCH':
-      return initialSearch; 
+      return initialSearch;
 
     case 'PAX_NUM':
       const paxType = action.payload.paxType;
@@ -129,7 +129,7 @@ export function retrieveRoutes() {
 
   return {
     type:    'ROUTES',
-    payload: axios.get("http://vitela.2e-systems.com:9035/routes?lang=en")
+    payload: axios.get("http://tudor.2e-systems.com:9035/routes?lang=en")
   };
 }
 

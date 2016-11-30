@@ -1,16 +1,16 @@
-import EEReactInfiniteCalendar from '../common/EEReactInfiniteCalendar'
+import EEReactInfiniteCalendar from '../../../common/EEReactInfiniteCalendar'
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import {
   selectDepartureDate,
   selectReturnDate
-} from '../reducers/Search'
+} from '../../../../reducers/Search'
 
 
 class RangeCalendar extends Component {
 
   onSelect(departureDate, returnDate){
-    
+
     if(departureDate){
       this.props.dispatch(selectDepartureDate(departureDate));
       if( this.props.oneWay){

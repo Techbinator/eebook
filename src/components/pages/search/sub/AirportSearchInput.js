@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import {/*over,*/ debounce, forEach, noop, filter } from 'lodash'
 import classNames from 'classnames'
-import Dropdown   from '../common/Dropdown'
-import { escapeRegExp } from '../utils'
+import Dropdown   from '../../../common/Dropdown'
+import { escapeRegExp } from '../../../../helpers/utils'
 
 export default class AirportSearchInput extends Dropdown {
   constructor (props) {
@@ -66,7 +66,7 @@ export default class AirportSearchInput extends Dropdown {
 
   onBlur() {
     if (!this.state.isOpen &&
-        this.state.airportName && 
+        this.state.airportName &&
         !this.state.airportCode) {
       this.setState({ airportName:"" });
     }
@@ -85,7 +85,7 @@ export default class AirportSearchInput extends Dropdown {
     let airports = filter(options, itm => {
       return (itm.value && itm.label && (
                 itm.value.toUpperCase()   === query ||
-                itm.label.match(contains) !== null)); 
+                itm.label.match(contains) !== null));
     });
 
     if (!airports.length) {
@@ -93,7 +93,7 @@ export default class AirportSearchInput extends Dropdown {
         disabled: true,
         label: "No matches were found",
         value: ""
-      }];      
+      }];
     }
 
     return airports;
@@ -114,11 +114,11 @@ export default class AirportSearchInput extends Dropdown {
             {this.props.label}
           </label>
         </div>
-        <input 
+        <input
           ref="toggle"
-          type="text" 
+          type="text"
           className="form-control"
-          placeholder={this.props.placeholder} 
+          placeholder={this.props.placeholder}
           role="combobox"
           aria-autocomplete="list"
           autoComplete="off"
@@ -144,7 +144,7 @@ export default class AirportSearchInput extends Dropdown {
   render() {
     const options = this.filterOptions();
     const cls     = classNames(
-      this.props.className, 
+      this.props.className,
       "form-group", "dropdown", "airport-search-input",
       {"open": this.state.isOpen === true && options.length}
     );
@@ -172,5 +172,5 @@ AirportSearchInput.defaultProps = {
   disabled:         false,
   error:            false,
   onInput:          noop,
-  onOptionSelected: noop  
+  onOptionSelected: noop
 };

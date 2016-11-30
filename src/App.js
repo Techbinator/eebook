@@ -2,8 +2,8 @@ import React, {Component} from 'react'
 import { Provider } from 'react-redux'
 import { LOCATION_CHANGE, syncHistoryWithStore } from 'react-router-redux';
 import { Router, Route, browserHistory } from 'react-router';
-import Search from './search'
-import Layout from './layout'
+import Search from './components/pages/search'
+import Layout from './components/layout'
 import Store  from './store'
 
 const store = Store.create();

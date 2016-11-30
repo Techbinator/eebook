@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import Button from '../common/Button'
-import CloseButton from '../common/CloseButton'
+import Button from '../../../common/Button'
+import CloseButton from '../../../common/CloseButton'
 import { isFunction, noop } from 'lodash'
 import classNames from 'classnames'
 import moment from 'moment';
