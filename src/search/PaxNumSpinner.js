@@ -11,8 +11,8 @@ export default class PaxNumSpinner extends Component {
   render() {
 
     let fromTo = this.props.to !== false ? this.props.from + '-' + this.props.to : this.props.from + '+';
-    let minusDisabled = this.props.num > this.props.minNum ? false : true;
-    let plusDisabled  = this.props.num > this.props.maxNum ? true : false;
+    let minusDisabled = this.props.num >  this.props.minNum ? false : true;
+    let plusDisabled  = this.props.num >= this.props.maxNum ? true : false;
 
     return (
       <div className={"paxnum-spinner " + this.props.className}>
@@ -30,7 +30,7 @@ export default class PaxNumSpinner extends Component {
 
           <div className="row compact actions">
             <div className="col-xs-6">
-              <Button className="default block" onClick={this.paxNumberChange.bind(this, '+')} tabIndex={-1}>+</Button>
+              <Button className="default block" disabled={plusDisabled} onClick={this.paxNumberChange.bind(this, '+')} tabIndex={-1}>+</Button>
             </div>
             <div className="col-xs-6">
               <Button className="default block" disabled={minusDisabled} onClick={this.paxNumberChange.bind(this, '-')} tabIndex={-1}>-</Button>

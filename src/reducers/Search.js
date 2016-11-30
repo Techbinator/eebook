@@ -71,6 +71,9 @@ export default function Search(state = initialSearch, action) {
         numJourneys: (state.numJourneys === 2 ? 1 : 2)
       };
 
+    case 'RESET_SEARCH':
+      return initialSearch; 
+
     case 'PAX_NUM':
       const paxType = action.payload.paxType;
       const paxNum = (action.payload.operation == "+") ? state[paxType] + 1 :  state[paxType] - 1;
@@ -80,7 +83,7 @@ export default function Search(state = initialSearch, action) {
         ...state,
         ...newState
       };
-      
+
       break;
 
     default:
@@ -140,5 +143,11 @@ export function setPaxNum( paxType, operation) {
 export function toggleReturn() {
   return {
     type: 'TOGGLE_RETURN'
+  };
+}
+
+export function resetSearch() {
+  return {
+    type: 'RESET_SEARCH'
   };
 }

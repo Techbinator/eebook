@@ -14,7 +14,8 @@ import {
   selectDestin,
   toggleReturn,
   selectReturnDate,
-  setPaxNum
+  setPaxNum,
+  resetSearch
 } from '../reducers/Search'
 
 import Dropdown from '../common/Dropdown'
@@ -93,6 +94,10 @@ class Form extends Component {
     this.props.dispatch(selectDestin(""));
   }
 
+  onResetSearch(){
+    this.props.dispatch(resetSearch(""));
+  }
+
   render() {
     // console.log("Form::render", this.props.options);
     // const options = [
@@ -161,7 +166,7 @@ class Form extends Component {
         <fieldset className="row actions compact">
           <legend className="sr-only">Actions</legend>
           <div  className="col-xs-6">
-            <Button className="default block">
+            <Button className="default block" onClick={this.onResetSearch.bind(this)}>
               <i className="glyphicon glyphicon-repeat"></i>
               <span className="btn--text">Reset</span>
             </Button>
