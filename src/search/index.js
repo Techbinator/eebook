@@ -8,16 +8,16 @@ import DatePicker           from './DatePicker'
 import PaxNumSpinner        from './PaxNumSpinner'
 
 import { map, uniqBy, filter } from 'lodash'
-import { 
-  retrieveRoutes, 
-  selectOrigin, 
-  selectDestin, 
-  toggleReturn 
+import {
+  retrieveRoutes,
+  selectOrigin,
+  selectDestin,
+  toggleReturn,
+  selectReturnDate,
+  setPaxNum
 } from '../reducers/Search'
 
 import Dropdown from '../common/Dropdown'
-
-var isDatepickerOpen = false;
 
 class Form extends Component {
 
@@ -27,9 +27,9 @@ class Form extends Component {
     }
   }
 
-  onChangeDate() {
-    isDatepickerOpen = !isDatepickerOpen;
-    this.props.dispatch({ type: 'OPEN_SIDE_MENU', payload: isDatepickerOpen ? 'DatePicker': null });
+  onChangeDate( dateSelector) {
+    dateSelector = this.props.menu ? null : dateSelector;
+    this.props.dispatch({ type: 'OPEN_SIDE_MENU', payload: dateSelector });
   }
 
   onOriginSelected(itm) {
@@ -41,6 +41,7 @@ class Form extends Component {
   }
 
   onToggleReturn() {
+    this.props.dispatch(selectReturnDate(null));
     this.props.dispatch(toggleReturn());
   }
 
@@ -54,7 +55,7 @@ class Form extends Component {
     let origins = map(options, (itm) => {
       return {
         label: itm.originName,
-        value: itm.originCode        
+        value: itm.originCode
       };
     });
 
@@ -64,7 +65,7 @@ class Form extends Component {
 
   getDestinations() {
     let options = this.props.options;
-    
+
     if (this.props.originCode !== "") {
       options = filter(options, {originCode: this.props.originCode});
     }
@@ -76,8 +77,12 @@ class Form extends Component {
       }
     });
 
-    destins = uniqBy(destins, 'value');    
+    destins = uniqBy(destins, 'value');
     return destins;
+  }
+
+  onPaxNumberChange( paxType, operation){
+    this.props.dispatch(setPaxNum(paxType, operation));
   }
 
   clearOrigin() {
@@ -108,14 +113,14 @@ class Form extends Component {
 
         <fieldset>
           <legend className="sr-only">Airports</legend>
-          <AirportSearchInput 
+          <AirportSearchInput
             label="From"
             error={this.props.error}
             onInput={this.clearOrigin.bind(this)}
             onOptionSelected={this.onOriginSelected.bind(this)}
             options={this.getOrigins()}
           />
-          <AirportSearchInput 
+          <AirportSearchInput
             label="To"
             error={this.props.error}
             onInput={this.clearDestin.bind(this)}
@@ -127,28 +132,29 @@ class Form extends Component {
         <fieldset className="row dates compact">
           <legend className="sr-only">Dates</legend>
           <div  className="col-xs-6">
-            <DatePicker label="Depart" onChangeDate={this.onChangeDate.bind(this)}/>
-          </div>  
-          <div  className="col-xs-6">  
-            <DatePicker 
+            <DatePicker label="Depart" onChangeDate={this.onChangeDate.bind(this, 'departureDate')} date={this.props.departureDate}/>
+          </div>
+          <div  className="col-xs-6">
+            <DatePicker
               label="Return on"
               disabled={this.props.isOneWay}
               toggleDisabled={this.onToggleReturn.bind(this)}
-              onChangeDate={this.onChangeDate.bind(this)}
+              date={this.props.returnDate}
+              onChangeDate={this.onChangeDate.bind(this, 'returnDate')}
             />
           </div>
         </fieldset>
-        
+
         <fieldset className="row paxes compact">
           <legend className="sr-only">Passengers</legend>
           <div  className="col-xs-4">
-            <PaxNumSpinner label="Adults" from={12} unit="years"/>
+            <PaxNumSpinner label="Adults" paxType="numAdt" minNum={1} maxNum={9} from={12} unit="years" num={this.props.numAdt} onPaxNumberChange={this.onPaxNumberChange.bind(this)}/>
           </div>
           <div  className="col-xs-4">
-            <PaxNumSpinner label="Children" from={2} to={12} unit="years"/>
+            <PaxNumSpinner label="Children" paxType="numChd" minNum={0} maxNum={9} from={2} to={12} unit="years" num={this.props.numChd} onPaxNumberChange={this.onPaxNumberChange.bind(this)}/>
           </div>
           <div  className="col-xs-4">
-            <PaxNumSpinner label="Infants" from={0} to={23} unit="months"/>
+            <PaxNumSpinner label="Infants" paxType="numInf" minNum={0} maxNum={9} from={0} to={23} unit="months" num={this.props.numInf} onPaxNumberChange={this.onPaxNumberChange.bind(this)}/>
           </div>
         </fieldset>
 
@@ -159,13 +165,13 @@ class Form extends Component {
               <i className="glyphicon glyphicon-repeat"></i>
               <span className="btn--text">Reset</span>
             </Button>
-          </div>  
+          </div>
           <div  className="col-xs-6">
             <Button className="primary block">
               <i className="glyphicon glyphicon-search"></i>
               <span className="btn--text">Search</span>
             </Button>
-          </div>  
+          </div>
         </fieldset>
       </form>
     );
@@ -183,7 +189,13 @@ function getProperties(state) {
     destinCode: st.destinCode,
     options:    st.routes,
     error:      st.error,
-    isOneWay:   st.numJourneys < 2
+    isOneWay:   st.numJourneys < 2,
+    departureDate: st.departureDate,
+    returnDate: st.returnDate,
+    numAdt: st.numAdt,
+    numChd: st.numChd,
+    numInf: st.numInf,
+    menu: state.Layout.menu
   };
 }
 

@@ -1,9 +1,10 @@
 import './Layout.scss'
+import ExtraMenu from '../search/ExtraMenu'
 
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-function AppLayout({ children, menu=null, map=null }) { 
+function AppLayout({ children, menu=null, map=null }) {
   let cls = ["mp-pusher"];
   menu && cls.push("mp-pushed");
 
@@ -14,18 +15,18 @@ function AppLayout({ children, menu=null, map=null }) {
         <div className="row-fluid scroller">
           <div className="hidden-xs col-sm-7 col-md-8 col-lg-9">
             <section className="map">{map}</section>
-          </div> 
+          </div>
           <div className="col-xs-12 col-sm-5 col-md-4 col-lg-3">
             {children}
           </div>
         </div>
 
         <aside className="mp-menu">
-          {menu}
+          <ExtraMenu menu={menu}/>
         </aside>
 
-      </div> 
-    </div> 
+      </div>
+    </div>
   );
 }
 

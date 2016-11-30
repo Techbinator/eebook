@@ -10,16 +10,21 @@ function createRootStore() {
   const initialState = {};
   const loggerMiddleware = createLogger();
 
+  // chrome redux developer tools
+  const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
   return createStore(
     rootReducer,
     initialState,
-    applyMiddleware(
-      promiseMiddleware(),
-      // thunkMiddleware,
-      loggerMiddleware
+    composeEnhancers(
+      applyMiddleware(
+        promiseMiddleware(),
+        // thunkMiddleware,
+        loggerMiddleware
+      )
     )
   );
-} 
+}
 
 export default {
   create: createRootStore

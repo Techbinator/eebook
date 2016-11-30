@@ -17,7 +17,7 @@ export default class App extends Component {
             <Route key="/" path="/" component={Search}/>
           </Route>
         </Router>
-      </Provider>      
+      </Provider>
     );
   }
 };
