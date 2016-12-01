@@ -33,7 +33,6 @@ class RangeCalendar extends Component {
   render(){
 
     const data = this.props.dateRange;
-
     const direction = (this.props.direction == -1) ? 'departure' : 'return';
     // in case we don`t have a min date we select today
     const periodStart = (data[direction].periodStart) ? this.formatDate(data[direction].periodStart) : new Date();
@@ -61,7 +60,6 @@ class RangeCalendar extends Component {
 }
 
 function getProperties(state) {
-  console.log(state);
   return {
     departureDate: state.Search.departureDate || false,
     returnDate: (state.Search.returnDate && state.Search.numJourneys == 2 ) ? state.Search.returnDate :   false,

@@ -1,5 +1,6 @@
 const initialState = {
-	menu: null
+	menu: null,
+  leftSection: 'map'
 };
 /**
  * Layout data
@@ -16,5 +17,5 @@ export default function Layout(state = initialState, action) {
 
     default:
       return state;
-  }  
+  }
 }

@@ -1,5 +1,5 @@
 html {
-  overflow-x: hidden; 
+  overflow-x: hidden;
 }
 
 html, body, .container-fluid {
@@ -16,10 +16,6 @@ body {
 .form-control,
 .input-group-addon {
   border-radius: 0;
-}
-
-.map {
-  background: #ddd;
 }
 
 .btn--block {

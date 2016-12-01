@@ -5,7 +5,7 @@ import RangeCalendar from '../pages/search/sub/RangeCalendar'
 export default class ExtraMenu extends Component {
 
   setData(){
-    switch (this.props.menu) {
+    switch (this.props.component) {
       case 'departureDate':
         return <RangeCalendar direction={-1}/>
         break;
