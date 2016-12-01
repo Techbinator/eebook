@@ -1,12 +1,7 @@
-import axios from 'axios'
-import config from '../json/config'
-
 const initialSearch = {
   originCode: "",
   destinCode: "",
   numJourneys: 2,
-  error:  false,
-  routes: [],
   departureDate: "",
   returnDate: "",
   numAdt: 1,
@@ -21,26 +16,6 @@ const initialSearch = {
  */
 export default function Search(state = initialSearch, action) {
   switch (action.type) {
-    case 'ROUTES_PENDING':
-      return {
-        ...state,
-        error:  null,
-        routes: []
-      };
-
-    case 'ROUTES_FULFILLED':
-      return {
-        ...state,
-        routes: action.payload.data.routes
-      };
-
-    case 'ROUTES_REJECTED':
-      return {
-        ...state,
-        error:  true,
-        routes: []
-      };
-
     case 'ORIGIN':
       return {
         ...state,
@@ -116,20 +91,6 @@ export function selectReturnDate(value) {
   return {
     type: 'RETURN_DATE',
     payload: value
-  };
-}
-
-export function retrieveRoutes() {
-  if (config.isOffline) {
-    return {
-      type: 'ROUTES_FULFILLED',
-      payload: require('../json/destinations.json')
-    }
-  }
-
-  return {
-    type:    'ROUTES',
-    payload: axios.get("http://tudor.2e-systems.com:9035/routes?lang=en")
   };
 }
 

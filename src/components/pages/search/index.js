@@ -9,7 +9,6 @@ import PaxNumSpinner        from './sub/PaxNumSpinner'
 
 import { map, uniqBy, filter } from 'lodash'
 import {
-  retrieveRoutes,
   selectOrigin,
   selectDestin,
   toggleReturn,
@@ -17,6 +16,8 @@ import {
   setPaxNum,
   resetSearch
 } from '../../../reducers/Search'
+
+import {retrieveRoutes} from '../../../reducers/Data';
 
 import Dropdown from '../../common/Dropdown'
 
@@ -192,7 +193,7 @@ function getProperties(state) {
   return {
     originCode: st.originCode,
     destinCode: st.destinCode,
-    options:    st.routes,
+    options:    state.Data.routes,
     error:      st.error,
     isOneWay:   st.numJourneys < 2,
     departureDate: st.departureDate,
