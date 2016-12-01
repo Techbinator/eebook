@@ -138,7 +138,10 @@ class Form extends Component {
         <fieldset className="row dates compact">
           <legend className="sr-only">Dates</legend>
           <div  className="col-xs-6">
-            <DatePicker label="Depart" onChangeDate={this.onChangeDate.bind(this, 'departureDate')} date={this.props.departureDate}/>
+            <DatePicker label="Depart"
+              onChangeDate={this.onChangeDate.bind(this, 'departureDate')}
+              date={this.props.departureDate}
+              />
           </div>
           <div  className="col-xs-6">
             <DatePicker
@@ -154,13 +157,13 @@ class Form extends Component {
         <fieldset className="row paxes compact">
           <legend className="sr-only">Passengers</legend>
           <div  className="col-xs-4">
-            <PaxNumSpinner label="Adults" paxType="numAdt" minNum={1} maxNum={9} from={12} unit="years" num={this.props.numAdt} onPaxNumberChange={this.onPaxNumberChange.bind(this)}/>
+            <PaxNumSpinner label="Adults" paxType="numAdt" minNum={1} maxNum={this.props.passengers.maxAdults} from={12} unit="years" num={this.props.numAdt} onPaxNumberChange={this.onPaxNumberChange.bind(this)}/>
           </div>
           <div  className="col-xs-4">
-            <PaxNumSpinner label="Children" paxType="numChd" minNum={0} maxNum={9} from={2} to={12} unit="years" num={this.props.numChd} onPaxNumberChange={this.onPaxNumberChange.bind(this)}/>
+            <PaxNumSpinner label="Children" paxType="numChd" minNum={0} maxNum={this.props.passengers.maxChildren} from={2} to={12} unit="years" num={this.props.numChd} onPaxNumberChange={this.onPaxNumberChange.bind(this)}/>
           </div>
           <div  className="col-xs-4">
-            <PaxNumSpinner label="Infants" paxType="numInf" minNum={0} maxNum={9} from={0} to={23} unit="months" num={this.props.numInf} onPaxNumberChange={this.onPaxNumberChange.bind(this)}/>
+            <PaxNumSpinner label="Infants" paxType="numInf" minNum={0} maxNum={this.props.passengers.maxInfants} from={0} to={23} unit="months" num={this.props.numInf} onPaxNumberChange={this.onPaxNumberChange.bind(this)}/>
           </div>
         </fieldset>
 
@@ -194,6 +197,8 @@ function getProperties(state) {
     originCode: st.originCode,
     destinCode: st.destinCode,
     options:    state.Data.routes,
+    passengers:    state.Data.passengers,
+    dates:    state.Data.dates,
     error:      st.error,
     isOneWay:   st.numJourneys < 2,
     departureDate: st.departureDate,
