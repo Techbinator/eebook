@@ -12,13 +12,16 @@
     "test:watch": "nwb test --server"
   },
   "dependencies": {
+    "ammap3": "github:amcharts/ammap3",
     "axios": "^0.15.2",
     "classnames": "^2.2.5",
+    "google-maps-react": "^1.0.19",
     "immutability-helper": "^2.0.0",
     "lodash": "^4.17.0",
     "react": "^15.3.2",
     "react-addons-css-transition-group": "^15.3.2",
     "react-addons-shallow-compare": "^15.4.1",
+    "react-d3-map": "^0.8.3",
     "react-dom": "^15.3.2",
     "react-infinite-calendar-with-range": "^1.1.21",
     "react-redux": "^4.4.6",

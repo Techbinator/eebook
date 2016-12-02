@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import Map from '../pages/search/sub/Map'
+import SearchMap from '../pages/search/sub/SearchMap'
 
 
 export default class LeftSection extends Component {
@@ -7,7 +7,7 @@ export default class LeftSection extends Component {
   setData(){
     switch (this.props.component) {
       case 'map':
-        return <Map />
+        return <SearchMap />
         break;
       default:
         return null
