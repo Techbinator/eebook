@@ -32,6 +32,35 @@ class SearchMap extends Component {
         this.setSelectedCityData()
       }
     }
+
+    this.setMapTexts();
+  }
+
+  setMapTexts(){
+
+    let origin = this.getSingleCityData('origin')
+    let destin = this.getSingleCityData('destin')
+    let message =  `Please select a an airport from below`;
+
+    if( origin && destin){
+      message = `You are flying from ${origin.title} to ${destin.title} ${this.props.oneWay ? '' : ' and back'}`
+    } else if(origin) {
+      message = `Available flights from ${origin.title}`
+    } else if(destin) {
+      message = `Available flights from ${destin.title}`
+    }
+
+    this.cities.push({
+        label: message,
+        svgPath: planeSVGFR,
+        left: 100,
+        top: 45,
+        color: "#CC0000",
+        labelColor: "#CC0000",
+        labelRollOverColor: "#CC0000",
+        labelFontSize: 20
+    })
+
   }
 
   setOriginAndDestination(){
@@ -67,7 +96,7 @@ class SearchMap extends Component {
 
     let cityData = [];
 
-    if( type == 'origin'){
+    if( type == 'origin' && this.props.originCode){
       cityData =  _.find(this.props.options, (x) => { return x.originCode == this.props.originCode })
       return {
         id: cityData.originCode,
@@ -77,7 +106,7 @@ class SearchMap extends Component {
         svgPath: targetSVG,
         ...selectedExtra
       }
-    } else {
+    } else if(type == 'destin' && this.props.destinCode){
       cityData =  _.find(this.props.options, (x) => { return x.destinationCode == this.props.destinCode })
       return {
         id: cityData.destinationCode,
@@ -88,6 +117,8 @@ class SearchMap extends Component {
         ...selectedExtra
       }
     }
+
+    return false;
 
   }
 
@@ -131,22 +162,14 @@ class SearchMap extends Component {
     } else {
       selectedCity = this.getSingleCityData( 'origin')
     }
+
     selectedCity.lines = map(this.cities, (city) => {
       return {
         latitudes: [selectedCity.latitude, city.latitude],
         longitudes: [selectedCity.longitude, city.longitude]
       }
     })
-    selectedCity.images = [{
-        label: `Flights from ${selectedCity.title}`,
-        svgPath: planeSVGFR,
-        left: 100,
-        top: 45,
-        color: "#CC0000",
-        labelColor: "#CC0000",
-        labelRollOverColor: "#CC0000",
-        labelFontSize: 20
-    }]
+
     this.cities.push(selectedCity);
     this.linkToObject = selectedCity;
   }
