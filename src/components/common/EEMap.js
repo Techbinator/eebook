@@ -49,12 +49,20 @@ EEMap.defaultProps = {
     selectedColor: "#000000",
     pauseDuration: 0.2,
     animationDuration:2.5,
-    adjustAnimationSpeed:true
+    adjustAnimationSpeed:true,
+    bringForwardOnHover: true,
+    alpha:1,
+    outlineThickness: 3,
+    tabIndex: 4
   },
 
   linesSettings : {
     color: "#CC0000",
-    alpha: 0.4
+    alpha: 0.4,
+    bringForwardOnHover: false,
+    thickness: 0.7,
+    selectable:false,
+    dashLength: 4
   },
   areasSettings:{
     unlistedAreasColor: '#CCCCCC'

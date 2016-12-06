@@ -98,10 +98,15 @@ class SearchMap extends Component {
 
   onCityClick(event){
     const cityCode = event.mapObject.id;
-    if((!this.props.originCode && !this.props.destinCode) || (!this.props.originCode && this.props.destinCode)){
-      this.props.dispatch(selectOrigin(cityCode));
+
+    if( this.props.originCode === cityCode){
+      this.props.dispatch(selectOrigin(''))
+    } else if( this.props.destinCode === cityCode){
+      this.props.dispatch(selectDestin(''))
+    } else if((!this.props.originCode && !this.props.destinCode) || (!this.props.originCode && this.props.destinCode)){
+      this.props.dispatch(selectOrigin(cityCode))
     } else {
-      this.props.dispatch(selectDestin(cityCode));
+      this.props.dispatch(selectDestin(cityCode))
     }
 
   }
@@ -118,6 +123,7 @@ class SearchMap extends Component {
         latitude: cityData.originLat,
         longitude: cityData.originLon,
         svgPath: targetSVG,
+        selectable: true,
         ...selectedExtra
       }
     } else if(type == 'destin' && this.props.destinCode){
@@ -128,6 +134,7 @@ class SearchMap extends Component {
         latitude: cityData.destinLat,
         longitude: cityData.destinLon,
         svgPath: targetSVG,
+        selectable: true,
         ...selectedExtra
       }
     }
@@ -179,7 +186,7 @@ class SearchMap extends Component {
       selectedCity = this.getSingleCityData( 'origin')
     }
 
-    selectedCity.lines = map(this.cities, (city) => {
+    this.lines = map(this.cities, (city) => {
       return {
         latitudes: [selectedCity.latitude, city.latitude],
         longitudes: [selectedCity.longitude, city.longitude]
