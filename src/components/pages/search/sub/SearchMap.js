@@ -2,6 +2,10 @@ import React, {Component} from 'react'
 import EEMap, {planeSVGFR, targetSVG, planeSVGLines, selectedExtra} from '../../../common/EEMap'
 import { connect } from 'react-redux'
 import { map, uniqBy, filter, find } from 'lodash'
+import {
+  selectOrigin,
+  selectDestin
+} from '../../../../reducers/Search'
 
 
 
@@ -92,6 +96,16 @@ class SearchMap extends Component {
     })
   }
 
+  onCityClick(event){
+    const cityCode = event.mapObject.id;
+    if((!this.props.originCode && !this.props.destinCode) || (!this.props.originCode && this.props.destinCode)){
+      this.props.dispatch(selectOrigin(cityCode));
+    } else {
+      this.props.dispatch(selectDestin(cityCode));
+    }
+
+  }
+
   getSingleCityData( type = 'origin'){
 
     let cityData = [];
@@ -138,7 +152,8 @@ class SearchMap extends Component {
           id: itm.originCode,
           svgPath: targetSVG,
           latitude: itm.originLat,
-          longitude: itm.originLon
+          longitude: itm.originLon,
+          selectable: true
         };
       } else {
         return {
@@ -146,7 +161,8 @@ class SearchMap extends Component {
           id: itm.destinationCode,
           svgPath: targetSVG,
           latitude: itm.destinLat,
-          longitude: itm.destinLon
+          longitude: itm.destinLon,
+          selectable: true
         };
       }
 
@@ -177,7 +193,7 @@ class SearchMap extends Component {
   render(){
     this.processData()
     if(this.cities){
-        return( <EEMap cities={this.cities} lines={this.lines} linkToObject={this.linkToObject} />)
+        return( <EEMap cities={this.cities} lines={this.lines} linkToObject={this.linkToObject} onCityClick={this.onCityClick.bind(this)} />)
     }
 
   }
